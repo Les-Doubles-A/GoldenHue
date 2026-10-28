@@ -1,4 +1,5 @@
 @echo off
+<<<<<<< HEAD
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 title GoldenHue - Compilation .exe
@@ -72,3 +73,7 @@ if exist "dist\GoldenHue.exe" (
 call build_venv\Scripts\deactivate.bat
 echo.
 pause
+=======
+REM Compile GoldenHue en application Windows sans console, avec son icone.
+py -m PyInstaller --noconfirm --onefile --windowed --icon "GoldenHue.ico" --name "GoldenHue" "GoldenHue_App.py"
+>>>>>>> d0a94e02c72f98998c2d55a7803e4292a693c876
