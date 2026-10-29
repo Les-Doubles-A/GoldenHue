@@ -17,11 +17,15 @@ use crate::export_utils::ExportManager;
 use crate::image_extract::extract_dominant_colors;
 use crate::storage::{FavoriteEntry, FavoritesStore, HistoryStore, SessionData, SessionStore};
 use crate::theme::{Theme, get_theme};
+use crate::updater::{
+    self, CURRENT_VERSION, SelfUpdateOutcome, UpdateCheckOutcome, UpdateInfo,
+};
 use egui::{
     Align, Color32, CornerRadius, CursorIcon, FontFamily, FontId, Frame, Layout, Margin, Mesh,
     RichText, ScrollArea, Sense, Stroke, StrokeKind, Ui, pos2, vec2,
 };
 use std::collections::HashSet;
+use std::sync::mpsc::Receiver;
 
 pub const APP_TITLE: &str = "GoldenHue - Générateur de Palette";
 
@@ -257,6 +261,12 @@ pub struct PaletteApp {
 
     clipboard: Option<arboard::Clipboard>,
     cache: ComputedCache,
+
+    update_check_rx: Option<Receiver<UpdateCheckOutcome>>,
+    update_check_manual: bool,
+    available_update: Option<UpdateInfo>,
+    self_update_rx: Option<Receiver<SelfUpdateOutcome>>,
+    is_updating: bool,
 }
 
 impl PaletteApp {
@@ -290,6 +300,9 @@ impl PaletteApp {
         let cache = ComputedCache::new(&base_hex, &working_palette);
         let history = history_store.load();
         let favorites = favorites_store.load();
+
+        updater::cleanup_old_executable();
+        let update_check_rx = Some(updater::spawn_update_check(cc.egui_ctx.clone()));
 
         Self {
             session_store,
@@ -327,6 +340,11 @@ impl PaletteApp {
             status_kind: StatusKind::Info,
             clipboard: arboard::Clipboard::new().ok(),
             cache,
+            update_check_rx,
+            update_check_manual: false,
+            available_update: None,
+            self_update_rx: None,
+            is_updating: false,
         }
     }
 
@@ -499,7 +517,7 @@ impl PaletteApp {
                     .color(t.accent),
             );
             ui.label(
-                RichText::new("Rust Edition")
+                RichText::new(format!("Rust Edition v{CURRENT_VERSION}"))
                     .font(FontId::new(11.0, FontFamily::Proportional))
                     .italics()
                     .color(t.text_muted),
@@ -510,6 +528,24 @@ impl PaletteApp {
                 let theme_label = if t.name == "dark" { "☀ Thème clair" } else { "☾ Thème sombre" };
                 if ui.button(RichText::new(theme_label).strong()).clicked() {
                     self.toggle_theme();
+                }
+
+                let checking = self.update_check_rx.is_some() || self.is_updating;
+                let upd_label = if self.is_updating {
+                    "⏳ Mise à jour…"
+                } else if self.update_check_rx.is_some() {
+                    "⏳ Vérification…"
+                } else {
+                    "🔄 Vérifier màj"
+                };
+                if ui
+                    .add_enabled(!checking, egui::Button::new(RichText::new(upd_label).strong()))
+                    .on_hover_text("Vérifier si une nouvelle version de GoldenHue est disponible sur GitHub")
+                    .clicked()
+                {
+                    self.update_check_manual = true;
+                    self.update_check_rx = Some(updater::spawn_update_check(ui.ctx().clone()));
+                    self.set_status("Vérification des mises à jour sur GitHub…", StatusKind::Info);
                 }
 
                 if ui.button(RichText::new("🎲 Surprends-moi").strong()).clicked() {
@@ -1475,10 +1511,66 @@ impl PaletteApp {
             }
         }
     }
+
+    fn poll_update_channels(&mut self) {
+        if let Some(rx) = &self.update_check_rx
+            && let Ok(outcome) = rx.try_recv()
+        {
+            self.update_check_rx = None;
+            let manual = self.update_check_manual;
+            self.update_check_manual = false;
+            match outcome {
+                UpdateCheckOutcome::UpToDate(ver) => {
+                    if manual {
+                        self.set_status(
+                            format!("✓ GoldenHue est à jour (v{ver})."),
+                            StatusKind::Success,
+                        );
+                    }
+                }
+                UpdateCheckOutcome::UpdateAvailable(info) => {
+                    self.set_status(
+                        format!(
+                            "🚀 Nouvelle version v{} disponible ! Cliquez sur « Mettre à jour maintenant » en haut.",
+                            info.latest_version
+                        ),
+                        StatusKind::Success,
+                    );
+                    self.available_update = Some(info);
+                }
+                UpdateCheckOutcome::Error(err) => {
+                    if manual {
+                        self.set_status(format!("✗ {err}"), StatusKind::Error);
+                    }
+                }
+            }
+        }
+
+        if let Some(rx) = &self.self_update_rx
+            && let Ok(outcome) = rx.try_recv()
+        {
+            self.self_update_rx = None;
+            self.is_updating = false;
+            match outcome {
+                SelfUpdateOutcome::ReadyToRestart(exe_path) => {
+                    self.set_status(
+                        "✓ Mise à jour installée ! Redémarrage de GoldenHue…",
+                        StatusKind::Success,
+                    );
+                    updater::restart_application(&exe_path);
+                }
+                SelfUpdateOutcome::Error(err) => {
+                    self.set_status(format!("✗ {err}"), StatusKind::Error);
+                }
+            }
+        }
+    }
 }
 
 impl eframe::App for PaletteApp {
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
+        self.poll_update_channels();
+
         if self.theme_dirty {
             self.theme.apply_to_ctx(ui.ctx());
             self.theme_dirty = false;
@@ -1497,6 +1589,74 @@ impl eframe::App for PaletteApp {
             .show(ui, |ui| {
                 self.render_toolbar(ui);
             });
+
+        // Bannière de mise à jour (affichée si une nouvelle version est détectée sur GitHub)
+        if let Some(info) = self.available_update.clone() {
+            egui::Panel::top("goldenhue_update_banner")
+                .frame(
+                    Frame::new()
+                        .fill(t.panel)
+                        .inner_margin(Margin::symmetric(14, 8))
+                        .stroke(Stroke::new(1.5, t.accent)),
+                )
+                .show(ui, |ui| {
+                    ui.horizontal_wrapped(|ui| {
+                        ui.label(
+                            RichText::new(format!(
+                                "🚀 Nouvelle version disponible : v{} (actuelle : v{CURRENT_VERSION})",
+                                info.latest_version
+                            ))
+                            .strong()
+                            .color(t.accent),
+                        );
+
+                        if !info.release_notes.is_empty() {
+                            let first_line = info.release_notes.lines().next().unwrap_or("");
+                            if !first_line.is_empty() {
+                                ui.label(
+                                    RichText::new(format!("— {first_line}"))
+                                        .italics()
+                                        .color(t.text_muted),
+                                );
+                            }
+                        }
+
+                        let btn_update = egui::Button::new(
+                            RichText::new(if self.is_updating {
+                                "⏳ Téléchargement en cours…"
+                            } else {
+                                "⬇ Mettre à jour maintenant"
+                            })
+                            .strong()
+                            .color(t.accent_text),
+                        )
+                        .fill(t.accent);
+
+                        if ui.add_enabled(!self.is_updating, btn_update).clicked() {
+                            self.is_updating = true;
+                            self.set_status(
+                                format!(
+                                    "Téléchargement de GoldenHue v{} depuis GitHub…",
+                                    info.latest_version
+                                ),
+                                StatusKind::Info,
+                            );
+                            self.self_update_rx = Some(updater::spawn_self_update(
+                                info.download_url.clone(),
+                                ui.ctx().clone(),
+                            ));
+                        }
+
+                        if ui.button("🌐 Voir sur GitHub").clicked() {
+                            updater::open_url_in_browser(&info.html_url);
+                        }
+
+                        if ui.button("✖ Ignorer").clicked() {
+                            self.available_update = None;
+                        }
+                    });
+                });
+        }
 
         // Barre de statut inférieure
         egui::Panel::bottom("goldenhue_statusbar")

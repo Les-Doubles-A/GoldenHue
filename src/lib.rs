@@ -9,3 +9,4 @@ pub mod image_extract;
 pub mod storage;
 pub mod theme;
 pub mod ui;
+pub mod updater;

@@ -12,6 +12,7 @@ Générateur de palettes de couleurs natif ultra-optimisé écrit en **Rust** av
 - **Rendu GPU des dégradés CSS** : interpolation directe par sommets via un `egui::Mesh` matériel en un seul appel de dessin (au lieu de 400 segments CPU).
 - **K-Means sans allocation en boucle** : extraction des couleurs dominantes d'une image sur buffer contigu `[f32; 3]` avec arrêt anticipé à convergence et générateur déterministe `XorShift64`.
 - **Changement de thème instantané** : bascule Clair / Sombre en temps réel sans redémarrer l'application.
+- **Vérification et mise à jour automatique via GitHub** : vérifie en arrière-plan au démarrage (et via le bouton « 🔄 Vérifier màj ») si une version plus récente est disponible sur `Les-Doubles-A/GoldenHue`, affiche une bannière de mise à jour et permet de télécharger + remplacer `GoldenHue.exe` et relancer l'application en un clic.
 
 ## Prérequis & Compilation
 
@@ -67,4 +68,5 @@ src/
   storage.rs           Persistance JSON (historique, favoris, session)
   theme.rs             Thèmes sombre et clair dynamiques
   ui.rs                Interface eframe/egui à sections empilées et cache mémoïsé
+  updater.rs           Vérification et auto-mise à jour depuis GitHub
 ```
