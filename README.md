@@ -1,97 +1,70 @@
-# GoldenHue
+# GoldenHue (Rust Edition)
 
-Générateur de palettes de couleurs (Tkinter). Toutes les fonctionnalités
-sont visibles en même temps dans une interface à sections empilées et
-défilantes — rien n'est caché derrière un simple sélecteur.
+Générateur de palettes de couleurs natif ultra-optimisé écrit en **Rust** avec **eframe / egui** (accélération matérielle OpenGL). Toutes les fonctionnalités sont visibles simultanément dans une interface fluide à 60 FPS avec sections empilées et défilantes.
 
-## Installation
+## Points forts & Optimisations (vs version Python/Tkinter)
+
+- **Démarrage instantané & binaire natif autonome** : exécutable unique `GoldenHue.exe` (~4 Mo au lieu de ~35 Mo sous PyInstaller), sans interpréteur ni machine virtuelle, compilé avec `opt-level = 3`, `lto = "thin"`, `codegen-units = 1`, `panic = "abort"` et `strip = true`.
+- **Décodage HEX et luminance WCAG en `O(1)`** :
+  - Validation et parsing `#RRGGBB` par table de correspondance statique (`HEX_LUT` 256 octets) sans expression régulière.
+  - Luminance relative WCAG 2.x précalculée dans une table de linéarisation sRGB (`SRGB_LINEAR_LUT` 256 entrées), éliminant tout appel à `powf(2.4)` lors des évaluations de contraste.
+- **Mémoïsation complète (`ComputedCache`)** : les 7 harmonies chromatiques, les bilans de contraste WCAG et les simulations de daltonisme ne sont recalculés que lorsque la couleur de base ou la palette de travail changent (0 calcul redondant pendant le rendu 60 FPS).
+- **Rendu GPU des dégradés CSS** : interpolation directe par sommets via un `egui::Mesh` matériel en un seul appel de dessin (au lieu de 400 segments CPU).
+- **K-Means sans allocation en boucle** : extraction des couleurs dominantes d'une image sur buffer contigu `[f32; 3]` avec arrêt anticipé à convergence et générateur déterministe `XorShift64`.
+- **Changement de thème instantané** : bascule Clair / Sombre en temps réel sans redémarrer l'application.
+
+## Prérequis & Compilation
 
 ```bash
-pip install -r requirements.txt
-```
+# Lancer en mode développement
+cargo run --release
 
-`tkinter` doit être disponible (`sudo apt install python3-tk` sous Debian/Ubuntu
-si besoin — il est inclus par défaut avec la plupart des distributions Python
-Windows/macOS).
+# Exécuter la suite de tests unitaires
+cargo test
 
-## Lancer l'application
-
-```bash
-python3 GoldenHue_App.py
+# Produire GoldenHue.exe à la racine (sous Windows)
+.\build.bat
 ```
 
 ## Fonctionnalités
 
 ### 1. Harmonies de couleurs
-Sept schémas générés à partir d'une fonction unique `generate_palette(base_hex, scheme)` :
-Golden (nombre d'or, 137.5° — comportement d'origine), Complémentaire (180°),
-Analogue (±30°), Triadique (120°/240°), Tétradique/carré (90°/180°/270°),
-Split-complémentaire (150°/210°), Monochromatique. Elles sont **toutes affichées
-simultanément** dans la section « Toutes les harmonies », en plus d'une palette
-de travail interactive basée sur le schéma choisi dans la barre latérale.
+Sept schémas générés à partir de `generate_palette(base_hex, scheme)` :
+- **Golden** (nombre d'or, `137.5°`), **Complémentaire** (`180°`), **Analogue** (`±30°`), **Triadique** (`120° / 240°`), **Tétradique / carré** (`90° / 180° / 270°`), **Split-complémentaire** (`150° / 210°`), **Monochromatique**.
+- Affichées **simultanément** dans la section « Toutes les harmonies », en plus de la palette de travail interactive.
 
 ### 2. Formats de couleur et export
-- Bascule d'affichage HEX / RGB / HSL / HSV pour toute la palette.
-- Export CSV, JSON, CSS (`:root { --var: ... }`), SCSS, TXT, Adobe `.ase`, image PNG.
-- Copie de toute la palette de travail en un clic.
-- `Ctrl+clic` sur une couleur copie directement sa valeur RGB.
+- Bascule d'affichage `HEX` / `RGB` / `HSL` / `HSV` en temps réel.
+- Export **CSV**, **JSON**, **CSS** (`:root { --var: ... }`), **SCSS**, **TXT**, **Adobe `.ase`** (binaire big-endian UTF-16BE), et **image PNG** (avec moteur de rendu de police matricielle 5x7 embarqué).
+- Copie d'une couleur au clic, ou directement en `RGB` via `Ctrl+clic`.
 
-### 3. Accessibilité / contraste
-- Ratio de contraste WCAG de chaque couleur de la palette de travail vs
-  blanc et noir, avec badge AA / AAA / Échec.
-- Vérificateur libre entre deux couleurs quelconques de la palette.
-- Simulation de daltonisme (protanopie, deutéranopie, tritanopie).
+### 3. Accessibilité / contraste WCAG & Daltonisme
+- Ratio de contraste WCAG de chaque couleur de la palette de travail face au blanc (`#FFFFFF`) et au noir (`#000000`) avec badge **AAA**, **AA**, **AA (grand texte)** ou **Échec**.
+- Comparateur libre entre deux couleurs quelconques de la palette.
+- Simulation de daltonisme (**Protanopie**, **Deutéranopie**, **Tritanopie**).
 
 ### 4. Ergonomie / UX
-- Historique des couleurs de base récentes (mini-swatches cliquables).
-- Favoris : palettes complètes sauvegardées localement (JSON).
-- Verrouillage par couleur (🔒/🔓) : une couleur verrouillée ne change pas
-  quand la base ou le schéma changent ; double-clic pour l'éditer manuellement
-  (verrouille automatiquement).
-- Génération aléatoire (« Surprends-moi »).
-- Sliders de saturation/luminosité globale appliqués à la couleur de base.
-- Undo/Redo sur les changements de couleur de base.
+- Historique des 12 dernières couleurs de base (`~/.goldenhue/history.json`).
+- Favoris persistés localement (`~/.goldenhue/favorites.json`).
+- Verrouillage individuel par couleur (`🔒` / `🔓`) et édition directe par sélecteur de couleur sur chaque carte (verrouille automatiquement).
+- Génération aléatoire (« 🎲 Surprends-moi »), ajustement global de saturation/luminosité, Annuler/Refaire (`Undo`/`Redo`), recherche par nom de couleur en français (exacte ou approximative).
 
-### 5. Interface
-- Thème clair/sombre togglable (persisté, appliqué au redémarrage).
-- Zone de contenu défilante, redimensionnement robuste : les rangées à
-  beaucoup de couleurs (ex. tétradique = 14 swatches) ont leur propre
-  défilement horizontal indépendant plutôt que d'être compressées ou coupées.
-- Aperçu « UI mockup » (carte + bouton + texte) coloré avec la palette de travail.
-- Barre de statut avec messages ✓ / ✗.
-- Tooltips sur chaque swatch (rôle de la couleur).
-- Section « Règles de design » : aide-mémoire dépliable regroupant les bonnes
-  pratiques (harmonies, règle 60-30-10, contraste WCAG, daltonisme, couleurs
-  sémantiques, psychologie des couleurs, dark mode, états interactifs...).
+## Structure du projet
 
-### 6. Fonctionnalités avancées
-- Extraction de palette dominante depuis une image (k-means, `numpy` + `Pillow`).
-- Génération à partir d'un nom de couleur français (« corail », « bleu marine »...).
-- Mode dégradé : génère un dégradé CSS à partir de 2-3 couleurs de la palette
-  de travail, avec aperçu visuel.
-- Session sauvegardée automatiquement (dernière couleur, thème, schéma).
-
-### 7. Qualité de code
-- Logique séparée de l'UI : `goldenhue/color_utils.py`, `contrast_utils.py`,
-  `colorblind.py`, `export_utils.py`, `image_extract.py`, `color_names.py`,
-  `storage.py`, `theme.py` — aucune dépendance à Tkinter, testables isolément.
-- Tests unitaires dans `tests/` (`python3 -m unittest discover -s tests`).
-- Gestion des erreurs de presse-papier (`try/except tk.TclError`), messages
-  affichés dans la barre de statut plutôt qu'un plantage silencieux.
-
-## Structure
-
-```
-GoldenHue_App.py       point d'entrée
-goldenhue/
-  color_utils.py        conversions + harmonies (logique pure)
-  contrast_utils.py      contraste WCAG
-  colorblind.py           simulation de daltonisme
-  color_names.py           noms de couleurs FR -> hex
-  image_extract.py          extraction k-means depuis une image
-  export_utils.py            CSV/JSON/CSS/SCSS/TXT/ASE/PNG
-  storage.py                  historique / favoris / session (JSON local)
-  theme.py                     thèmes clair/sombre
-  ui.py                         interface Tkinter
-tests/                  tests unitaires (logique pure, sans UI)
+```text
+Cargo.toml             Configuration Cargo et profil Release optimisé
+build.rs               Intégration de l'icône Windows dans l'exécutable (.rc)
+build.bat              Script de test et de compilation vers GoldenHue.exe
+src/
+  main.rs              Point d'entrée natif (fenêtre eframe + icône embarquée)
+  lib.rs               Export des modules de la bibliothèque
+  color_utils.rs       Conversions RGB/HEX/HSL/HSV (LUT O(1)) et harmonies
+  contrast_utils.rs    Contraste WCAG 2.x avec table sRGB précalculée
+  colorblind.rs        Simulation matricielle de daltonisme
+  color_names.rs       Dictionnaire de 50 noms français + recherche floue
+  image_extract.rs     Extraction K-Means rapide depuis une image
+  export_utils.rs      Exports CSV, JSON, CSS, SCSS, TXT, ASE et PNG
+  storage.rs           Persistance JSON (historique, favoris, session)
+  theme.rs             Thèmes sombre et clair dynamiques
+  ui.rs                Interface eframe/egui à sections empilées et cache mémoïsé
 ```

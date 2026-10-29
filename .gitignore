@@ -1,0 +1,10 @@
+# Dossier de compilation Rust (très volumineux, à ne pas envoyer sur GitHub)
+/target/
+
+# Anciens dossiers de build Python éventuels
+/build/
+/dist/
+/build_venv/
+__pycache__/
+*.pyc
+*.spec
