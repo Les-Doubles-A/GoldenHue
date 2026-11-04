@@ -31,29 +31,29 @@ pub const APP_TITLE: &str = "GoldenHue - Générateur de Palette";
 
 const DESIGN_RULES: &[(&str, &[&str])] = &[
     (
-        "🧭 Harmonies chromatiques",
+        "Harmonies chromatiques",
         &[
             "Monochromatique : une seule teinte, variations de luminosité/saturation. Le plus sûr, toujours cohérent.",
-            "Analogue (±30°) : teintes voisines sur le cercle. Doux, harmonieux — bon pour du contenu apaisant (santé, nature, lifestyle).",
+            "Analogue (±30°) : teintes voisines sur le cercle. Doux, harmonieux, bon pour du contenu apaisant (santé, nature, lifestyle).",
             "Complémentaire (180°) : fort contraste. Idéal pour un accent/CTA qui doit ressortir, à utiliser avec parcimonie.",
             "Split-complémentaire (150°/210°) : contraste marqué mais moins agressif que le complémentaire pur.",
             "Triadique (120°/240°) : équilibré et vivant, demande de la rigueur pour ne pas devenir criard.",
-            "Tétradique / carré (90°/180°/270°) : riche mais difficile à équilibrer — réserver aux marques créatives, une couleur doit dominer.",
+            "Tétradique / carré (90°/180°/270°) : riche mais difficile à équilibrer, réserver aux marques créatives, une couleur doit dominer.",
             "Golden (137,5°, nombre d'or) : distribution naturelle et non répétitive, utile pour générer beaucoup de teintes sans motif visible.",
         ],
     ),
     (
-        "📐 Répartition des surfaces",
+        "Répartition des surfaces",
         &[
             "Règle 60-30-10 : 60% couleur dominante (fond/neutre), 30% secondaire (sections, cartes), 10% accent (boutons, liens, alertes).",
-            "Variante interfaces denses : 90-6-3 — encore plus de neutre, l'accent reste rare donc reste efficace.",
+            "Variante interfaces denses : 90-6-3, encore plus de neutre, l'accent reste rare donc reste efficace.",
             "Une couleur d'accent unique et cohérente sur toute l'app plutôt qu'un accent différent par écran.",
             "Limiter la palette à 2-4 couleurs principales + neutres (gris/blanc/noir). Trop de couleurs = perte de hiérarchie visuelle.",
             "Les couleurs neutres (gris) structurent 80% d'une interface ; les couleurs vives servent à guider l'œil, pas à décorer.",
         ],
     ),
     (
-        "🔎 Contraste & accessibilité (WCAG)",
+        "Contraste & accessibilité (WCAG)",
         &[
             "Texte normal : ratio de contraste ≥ 4.5:1 (niveau AA).",
             "Grand texte (≥18pt ou ≥14pt gras) : ≥ 3:1 suffit.",
@@ -64,16 +64,16 @@ const DESIGN_RULES: &[(&str, &[&str])] = &[
         ],
     ),
     (
-        "👁 Daltonisme",
+        "Daltonisme",
         &[
             "≈ 8% des hommes et 0,5% des femmes sont daltoniens (majoritairement deutéranopie/protanopie, rouge-vert).",
             "Éviter le duo rouge/vert seul pour distinguer des états (succès/erreur) : doubler avec forme, icône ou position.",
-            "Le bleu/orange reste globalement bien perçu par la plupart des types de daltonisme — bon choix de secours pour un contraste fiable.",
+            "Le bleu/orange reste globalement bien perçu par la plupart des types de daltonisme, bon choix de secours pour un contraste fiable.",
             "Tester systématiquement en simulation protanopie, deutéranopie et tritanopie avant de valider une palette de statuts.",
         ],
     ),
     (
-        "🚦 Couleurs sémantiques (conventions attendues)",
+        "Couleurs sémantiques (conventions attendues)",
         &[
             "Rouge = erreur / danger / suppression.",
             "Vert = succès / validé / disponible.",
@@ -85,18 +85,18 @@ const DESIGN_RULES: &[(&str, &[&str])] = &[
         ],
     ),
     (
-        "🎭 Psychologie et température des couleurs",
+        "Psychologie et température des couleurs",
         &[
             "Couleurs chaudes (rouge, orange, jaune) : énergie, urgence, attirent l'attention en premier.",
-            "Couleurs froides (bleu, vert, violet) : calme, confiance, sérieux — dominent souvent le fond des interfaces pro.",
-            "Bleu : confiance, corporate, tech, santé — couleur la plus 'sûre' et la plus utilisée dans le B2B/SaaS.",
+            "Couleurs froides (bleu, vert, violet) : calme, confiance, sérieux, dominent souvent le fond des interfaces pro.",
+            "Bleu : confiance, corporate, tech, santé, couleur la plus 'sûre' et la plus utilisée dans le B2B/SaaS.",
             "Vert : croissance, nature, argent (occident), validation.",
             "Noir/gris foncé : premium, élégance, sobriété.",
-            "Ces associations sont des tendances, pas des lois — toujours les valider avec la cible et le secteur visés.",
+            "Ces associations sont des tendances, pas des lois, toujours les valider avec la cible et le secteur visés.",
         ],
     ),
     (
-        "🌗 Mode sombre (dark mode)",
+        "Mode sombre (dark mode)",
         &[
             "Ne pas juste inverser les couleurs claires : redéfinir la palette pour le fond sombre.",
             "Éviter le noir pur (#000000) et le blanc pur (#FFFFFF) : préférer des gris très foncés/clairs pour réduire la fatigue oculaire et l'effet de halo.",
@@ -105,7 +105,7 @@ const DESIGN_RULES: &[(&str, &[&str])] = &[
         ],
     ),
     (
-        "🧩 États interactifs & dégradés de teinte",
+        "États interactifs & dégradés de teinte",
         &[
             "Prévoir des variantes pour chaque couleur d'action : normal, hover, active/pressed, disabled, focus.",
             "Garder les variantes dans la même teinte (ajuster seulement luminosité/saturation) pour rester cohérent visuellement.",
@@ -114,16 +114,16 @@ const DESIGN_RULES: &[(&str, &[&str])] = &[
         ],
     ),
     (
-        "🧱 Cohérence & système de design",
+        "Cohérence & système de design",
         &[
             "Définir la palette comme des 'tokens' nommés par rôle (primary, success, danger...) plutôt que par valeur brute réutilisée partout.",
-            "Toute nouvelle couleur ajoutée à un écran doit se justifier — sinon réutiliser une couleur existante de la palette.",
+            "Toute nouvelle couleur ajoutée à un écran doit se justifier, sinon réutiliser une couleur existante de la palette.",
             "Tester la palette sur de vrais écrans/maquettes (pas seulement des swatches isolés) : une couleur change de perception selon son voisinage.",
             "Vérifier la palette à la fois en petite taille (icônes, mobile) et en grande taille (bannières, fonds).",
         ],
     ),
     (
-        "✅ Check-list rapide avant de valider une palette",
+        "Liste de contrôle avant validation",
         &[
             "Le contraste texte/fond passe le niveau AA minimum partout.",
             "La palette reste lisible en simulation daltonisme.",
@@ -134,6 +134,41 @@ const DESIGN_RULES: &[(&str, &[&str])] = &[
         ],
     ),
 ];
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Tab {
+    Palette,
+    Harmonies,
+    Accessibilite,
+    Image,
+    Favoris,
+    Export,
+    Guide,
+}
+
+impl Tab {
+    const ALL: [Tab; 7] = [
+        Tab::Palette,
+        Tab::Harmonies,
+        Tab::Accessibilite,
+        Tab::Image,
+        Tab::Favoris,
+        Tab::Export,
+        Tab::Guide,
+    ];
+
+    fn label(self) -> &'static str {
+        match self {
+            Tab::Palette => "Palette",
+            Tab::Harmonies => "Harmonies",
+            Tab::Accessibilite => "Accessibilité",
+            Tab::Image => "Image",
+            Tab::Favoris => "Favoris",
+            Tab::Export => "Export",
+            Tab::Guide => "Guide",
+        }
+    }
+}
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum StatusKind {
@@ -209,11 +244,21 @@ fn section_frame<R>(ui: &mut Ui, t: Theme, title: &str, add_contents: impl FnOnc
         .inner_margin(Margin::same(14))
         .show(ui, |ui| {
             ui.set_width(ui.available_width());
-            ui.label(RichText::new(title).size(16.0).strong().color(t.accent));
-            ui.add_space(6.0);
+            ui.label(RichText::new(title).size(15.0).strong().color(t.text));
+            ui.add_space(8.0);
             add_contents(ui)
         });
     ui.add_space(10.0);
+}
+
+fn group_label(ui: &mut Ui, t: Theme, text: &str) {
+    ui.label(
+        RichText::new(text.to_uppercase())
+            .size(11.0)
+            .strong()
+            .color(t.text_muted),
+    );
+    ui.add_space(4.0);
 }
 
 pub struct PaletteApp {
@@ -224,6 +269,7 @@ pub struct PaletteApp {
 
     theme: Theme,
     theme_dirty: bool,
+    active_tab: Tab,
 
     base_hex: String,
     hex_input: String,
@@ -311,6 +357,7 @@ impl PaletteApp {
             session_data,
             theme,
             theme_dirty: false,
+            active_tab: Tab::Palette,
              hex_input: base_hex.clone(),
             base_hex,
             name_input: String::new(),
@@ -334,9 +381,9 @@ impl PaletteApp {
             gradient_idx_3: None,
             gradient_colors,
             gradient_css,
-            extracted_image_name: "Aucune image chargée".to_string(),
+            extracted_image_name: "Aucune image".to_string(),
             extracted_colors: Vec::new(),
-            status_text: "Prêt — Cliquez sur une couleur pour la copier (Ctrl+clic = RGB).".to_string(),
+            status_text: "Cliquez sur une couleur pour la copier. Ctrl+clic copie en RGB.".to_string(),
             status_kind: StatusKind::Info,
             clipboard: arboard::Clipboard::new().ok(),
             cache,
@@ -366,7 +413,7 @@ impl PaletteApp {
         self.copy_text_to_clipboard(
             ui,
             &formatted,
-            format!("✓ {formatted} copié dans le presse-papier."),
+            format!("{formatted} copié."),
         );
     }
 
@@ -374,7 +421,7 @@ impl PaletteApp {
         let normalized = match cu::normalize_hex(hex_code) {
             Ok(h) => h,
             Err(e) => {
-                self.set_status(format!("✗ {e}"), StatusKind::Error);
+                self.set_status(format!("{e}"), StatusKind::Error);
                 return;
             }
         };
@@ -495,7 +542,7 @@ impl PaletteApp {
         self.session_store.save(&self.session_data);
         self.set_status(
             format!(
-                "✓ Thème {} appliqué instantanément.",
+                "Thème {} activé.",
                 if next_name == "dark" { "sombre" } else { "clair" }
             ),
             StatusKind::Success,
@@ -510,61 +557,56 @@ impl PaletteApp {
         let t = self.theme;
         ui.horizontal(|ui| {
             ui.add_space(6.0);
-            ui.label(
-                RichText::new("🎨 GoldenHue")
-                    .font(FontId::new(20.0, FontFamily::Proportional))
-                    .strong()
-                    .color(t.accent),
-            );
-            ui.label(
-                RichText::new(format!("Rust Edition v{CURRENT_VERSION}"))
-                    .font(FontId::new(11.0, FontFamily::Proportional))
-                    .italics()
-                    .color(t.text_muted),
-            );
+            ui.label(RichText::new("GoldenHue").size(19.0).strong().color(t.accent));
+            ui.label(RichText::new(format!("v{CURRENT_VERSION}")).size(11.5).color(t.text_muted));
+            ui.add_space(14.0);
+
+            if ui
+                .add_enabled(!self.undo_stack.is_empty(), egui::Button::new("Annuler"))
+                .on_hover_text("Ctrl+Z")
+                .clicked()
+            {
+                self.undo();
+            }
+            if ui
+                .add_enabled(!self.redo_stack.is_empty(), egui::Button::new("Rétablir"))
+                .on_hover_text("Ctrl+Y")
+                .clicked()
+            {
+                self.redo();
+            }
+            if ui
+                .button("Couleur aléatoire")
+                .on_hover_text("Tire une nouvelle couleur de base")
+                .clicked()
+            {
+                let rnd = cu::random_hex();
+                self.set_base_color(&rnd, true, true);
+            }
 
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
                 ui.add_space(6.0);
-                let theme_label = if t.name == "dark" { "☀ Thème clair" } else { "☾ Thème sombre" };
-                if ui.button(RichText::new(theme_label).strong()).clicked() {
+                let theme_label = if t.name == "dark" { "Thème clair" } else { "Thème sombre" };
+                if ui.button(theme_label).clicked() {
                     self.toggle_theme();
                 }
 
                 let checking = self.update_check_rx.is_some() || self.is_updating;
                 let upd_label = if self.is_updating {
-                    "⏳ Mise à jour…"
+                    "Mise à jour…"
                 } else if self.update_check_rx.is_some() {
-                    "⏳ Vérification…"
+                    "Vérification…"
                 } else {
-                    "🔄 Vérifier màj"
+                    "Mises à jour"
                 };
                 if ui
-                    .add_enabled(!checking, egui::Button::new(RichText::new(upd_label).strong()))
-                    .on_hover_text("Vérifier si une nouvelle version de GoldenHue est disponible sur GitHub")
+                    .add_enabled(!checking, egui::Button::new(upd_label))
+                    .on_hover_text("Rechercher une nouvelle version sur GitHub")
                     .clicked()
                 {
                     self.update_check_manual = true;
                     self.update_check_rx = Some(updater::spawn_update_check(ui.ctx().clone()));
-                    self.set_status("Vérification des mises à jour sur GitHub…", StatusKind::Info);
-                }
-
-                if ui.button(RichText::new("🎲 Surprends-moi").strong()).clicked() {
-                    let rnd = cu::random_hex();
-                    self.set_base_color(&rnd, true, true);
-                }
-
-                if ui
-                    .add_enabled(!self.redo_stack.is_empty(), egui::Button::new("↻ Refaire"))
-                    .clicked()
-                {
-                    self.redo();
-                }
-
-                if ui
-                    .add_enabled(!self.undo_stack.is_empty(), egui::Button::new("↺ Annuler"))
-                    .clicked()
-                {
-                    self.undo();
+                    self.set_status("Recherche de mises à jour…", StatusKind::Info);
                 }
             });
         });
@@ -575,33 +617,55 @@ impl PaletteApp {
         ScrollArea::vertical()
             .id_salt("sidebar_scroll")
             .show(ui, |ui| {
-                ui.add_space(6.0);
-                ui.label(RichText::new("Couleur de base").size(14.0).strong().color(t.text));
                 ui.add_space(4.0);
+                group_label(ui, t, "Couleur de base");
 
-                // Sélecteur de couleur interactif + aperçu direct
+                // Aperçu de la couleur de base : clic pour copier
+                let base_fill = hex_to_color32(&self.base_hex);
+                let base_fg = readable_color32(&self.base_hex);
+                let (rect, resp) =
+                    ui.allocate_exact_size(vec2(ui.available_width(), 64.0), Sense::click());
+                ui.painter().rect_filled(rect, CornerRadius::same(8), base_fill);
+                ui.painter().rect_stroke(
+                    rect,
+                    CornerRadius::same(8),
+                    Stroke::new(1.0, t.border),
+                    StrokeKind::Inside,
+                );
+                ui.painter().text(
+                    rect.left_center() + vec2(14.0, 0.0),
+                    egui::Align2::LEFT_CENTER,
+                    cu::format_color(&self.base_hex, self.color_format),
+                    FontId::new(16.0, FontFamily::Monospace),
+                    base_fg,
+                );
+                if resp
+                    .on_hover_cursor(CursorIcon::PointingHand)
+                    .on_hover_text("Copier la couleur de base")
+                    .clicked()
+                {
+                    let hex = self.base_hex.clone();
+                    let fmt = self.color_format;
+                    self.copy_color(ui, &hex, fmt);
+                }
+
+                ui.add_space(6.0);
                 ui.horizontal(|ui| {
                     let (r, g, b) = cu::hex_to_rgb256(&self.base_hex);
                     let mut srgb = [r, g, b];
-                    let resp = ui.color_edit_button_srgb(&mut srgb);
-                    if resp.changed() {
+                    if ui
+                        .color_edit_button_srgb(&mut srgb)
+                        .on_hover_text("Ouvrir le sélecteur de couleur")
+                        .changed()
+                    {
                         let new_hex = cu::rgb256_to_hex(srgb[0], srgb[1], srgb[2]);
                         self.set_base_color(&new_hex, true, true);
                     }
-                    ui.label(
-                        RichText::new("← Choisir une couleur")
-                            .size(12.5)
-                            .color(t.text),
-                    );
-                });
-
-                ui.add_space(4.0);
-                ui.horizontal(|ui| {
-                    ui.label(RichText::new("HEX").monospace().strong().color(t.text_muted));
                     let resp = ui.add(
                         egui::TextEdit::singleline(&mut self.hex_input)
                             .font(FontId::new(13.5, FontFamily::Monospace))
-                            .desired_width(110.0),
+                            .hint_text("#RRGGBB")
+                            .desired_width((ui.available_width() - 90.0).max(60.0)),
                     );
                     let apply_clicked = ui.button("Appliquer").clicked();
                     if apply_clicked
@@ -614,14 +678,13 @@ impl PaletteApp {
 
                 ui.add_space(4.0);
                 ui.horizontal(|ui| {
-                    ui.label(RichText::new("Nom").monospace().strong().color(t.text_muted));
                     let resp = ui
                         .add(
                             egui::TextEdit::singleline(&mut self.name_input)
-                                .hint_text("ex. corail, bleu marine…")
-                                .desired_width(135.0),
+                                .hint_text("Nom : corail, bleu marine...")
+                                .desired_width((ui.available_width() - 52.0).max(60.0)),
                         )
-                        .on_hover_text("Saisissez un nom de couleur français puis appuyez sur Entrée");
+                        .on_hover_text("Nom de couleur en français, validé avec Entrée");
                     let ok_clicked = ui.button("OK").clicked();
                     if ok_clicked
                         || (resp.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter)))
@@ -630,13 +693,10 @@ impl PaletteApp {
                         if !name.is_empty() {
                             if let Some(hex) = lookup_color_name(&name) {
                                 self.set_base_color(hex, true, true);
-                                self.set_status(
-                                    format!("✓ « {name} » → {hex}"),
-                                    StatusKind::Success,
-                                );
+                                self.set_status(format!("« {name} » : {hex}"), StatusKind::Success);
                             } else {
                                 self.set_status(
-                                    format!("✗ Couleur inconnue : « {name} »."),
+                                    format!("Couleur inconnue : « {name} »."),
                                     StatusKind::Error,
                                 );
                             }
@@ -644,96 +704,84 @@ impl PaletteApp {
                     }
                 });
 
-                ui.add_space(10.0);
-                ui.separator();
-                ui.add_space(6.0);
-
-                // Format d'affichage
-                ui.label(RichText::new("Format affiché").size(14.0).strong().color(t.text));
+                ui.add_space(14.0);
+                group_label(ui, t, "Format d'affichage");
                 ui.horizontal(|ui| {
                     for fmt in ColorFormat::ALL {
                         ui.selectable_value(&mut self.color_format, fmt, fmt.as_str());
                     }
                 });
-                ui.label(
-                    RichText::new("Astuce : Ctrl+clic copie toujours en RGB")
-                        .size(11.0)
-                        .italics()
-                        .color(t.text_muted),
-                );
 
-                ui.add_space(10.0);
-                ui.separator();
-                ui.add_space(6.0);
-
-                // Historique récent
-                ui.label(RichText::new("Historique récent").size(14.0).strong().color(t.text));
+                ui.add_space(14.0);
+                group_label(ui, t, "Historique");
                 if self.history.is_empty() {
-                    ui.label(RichText::new("Aucun historique").size(11.5).italics().color(t.text_muted));
+                    ui.label(
+                        RichText::new("Aucune couleur récente")
+                            .size(12.0)
+                            .color(t.text_muted),
+                    );
                 } else {
                     let history_clone = self.history.clone();
                     ui.horizontal_wrapped(|ui| {
                         for hex in history_clone {
                             let col = hex_to_color32(&hex);
-                            let (rect, resp) = ui.allocate_exact_size(vec2(24.0, 24.0), Sense::click());
-                            ui.painter().rect_filled(rect, CornerRadius::same(4), col);
+                            let (rect, resp) =
+                                ui.allocate_exact_size(vec2(26.0, 26.0), Sense::click());
+                            ui.painter().rect_filled(rect, CornerRadius::same(5), col);
+                            let stroke = if resp.hovered() {
+                                Stroke::new(1.5, t.accent)
+                            } else {
+                                Stroke::new(1.0, t.border)
+                            };
                             ui.painter().rect_stroke(
                                 rect,
-                                CornerRadius::same(4),
-                                Stroke::new(1.0, t.border),
+                                CornerRadius::same(5),
+                                stroke,
                                 StrokeKind::Inside,
                             );
-                            if resp.on_hover_cursor(CursorIcon::PointingHand).on_hover_text(&hex).clicked() {
+                            if resp
+                                .on_hover_cursor(CursorIcon::PointingHand)
+                                .on_hover_text(&hex)
+                                .clicked()
+                            {
                                 self.set_base_color(&hex, true, true);
                             }
                         }
                     });
                 }
 
-                ui.add_space(10.0);
-                ui.separator();
-                ui.add_space(6.0);
-
-                // Ajustement global
-                ui.label(RichText::new("Ajustement global").size(14.0).strong().color(t.text));
-                ui.label(RichText::new("Saturation (%)").size(12.0).color(t.text_muted));
-                ui.add(egui::Slider::new(&mut self.sat_slider, -50.0..=50.0).step_by(1.0));
-                ui.label(RichText::new("Luminosité (%)").size(12.0).color(t.text_muted));
-                ui.add(egui::Slider::new(&mut self.light_slider, -50.0..=50.0).step_by(1.0));
-
-                if ui.button("Appliquer l'ajustement").clicked() {
-                    if self.sat_slider == 0.0 && self.light_slider == 0.0 {
-                        self.set_status(
-                            "Ajustez d'abord les curseurs de saturation/luminosité.",
-                            StatusKind::Info,
-                        );
-                    } else {
-                        let new_hex = cu::apply_global_adjustment(
-                            &self.base_hex,
-                            self.sat_slider,
-                            self.light_slider,
-                        );
-                        self.sat_slider = 0.0;
-                        self.light_slider = 0.0;
-                        self.set_base_color(&new_hex, true, true);
-                    }
+                ui.add_space(14.0);
+                group_label(ui, t, "Ajustement global");
+                ui.add(
+                    egui::Slider::new(&mut self.sat_slider, -50.0..=50.0)
+                        .step_by(1.0)
+                        .suffix(" %")
+                        .text("Saturation"),
+                );
+                ui.add(
+                    egui::Slider::new(&mut self.light_slider, -50.0..=50.0)
+                        .step_by(1.0)
+                        .suffix(" %")
+                        .text("Luminosité"),
+                );
+                let has_adjust = self.sat_slider != 0.0 || self.light_slider != 0.0;
+                if ui
+                    .add_enabled(has_adjust, egui::Button::new("Appliquer l'ajustement"))
+                    .clicked()
+                {
+                    let new_hex =
+                        cu::apply_global_adjustment(&self.base_hex, self.sat_slider, self.light_slider);
+                    self.sat_slider = 0.0;
+                    self.light_slider = 0.0;
+                    self.set_base_color(&new_hex, true, true);
                 }
 
-                ui.add_space(10.0);
-                ui.separator();
-                ui.add_space(6.0);
-
-                // Schéma de la palette de travail
-                ui.label(
-                    RichText::new("Schéma (palette de travail)")
-                        .size(14.0)
-                        .strong()
-                        .color(t.text),
-                );
+                ui.add_space(14.0);
+                group_label(ui, t, "Schéma de la palette");
                 let prev_scheme = self.working_scheme;
                 egui::ComboBox::from_id_salt("working_scheme_combo")
                     .selected_text(self.working_scheme.label())
-                    .width(250.0)
+                    .width((ui.available_width() - 8.0).max(120.0))
                     .show_ui(ui, |ui| {
                         for scheme in SchemeType::ALL {
                             ui.selectable_value(&mut self.working_scheme, scheme, scheme.label());
@@ -759,37 +807,35 @@ impl PaletteApp {
         let text_col = readable_color32(hex_code);
         let formatted = cu::format_color(hex_code, self.color_format);
 
-        let card_size = vec2(134.0, 96.0);
+        let card_size = vec2(138.0, 100.0);
         let (rect, resp) = ui.allocate_exact_size(card_size, Sense::click());
+        let locked = editable_idx.is_some_and(|i| self.locked_indices.contains(&i));
 
-        ui.painter()
-            .rect_filled(rect, CornerRadius::same(6), fill);
-        ui.painter().rect_stroke(
-            rect,
-            CornerRadius::same(6),
-            Stroke::new(1.0, self.theme.border),
-            StrokeKind::Inside,
-        );
-
-        // Texte centré : rôle + valeur formatée
-        let center_x = rect.center().x;
-        let role_y = if editable_idx.is_some() {
-            rect.min.y + 38.0
+        ui.painter().rect_filled(rect, CornerRadius::same(8), fill);
+        let stroke = if locked {
+            Stroke::new(2.0, text_col)
+        } else if resp.hovered() {
+            Stroke::new(1.5, self.theme.accent)
         } else {
-            rect.min.y + 32.0
+            Stroke::new(1.0, self.theme.border)
         };
+        ui.painter()
+            .rect_stroke(rect, CornerRadius::same(8), stroke, StrokeKind::Inside);
+
+        // Rôle et valeur alignés en bas à gauche
+        let left_x = rect.min.x + 10.0;
         ui.painter().text(
-            pos2(center_x, role_y),
-            egui::Align2::CENTER_CENTER,
+            pos2(left_x, rect.max.y - 34.0),
+            egui::Align2::LEFT_CENTER,
             role,
             FontId::new(12.0, FontFamily::Proportional),
             text_col,
         );
         ui.painter().text(
-            pos2(center_x, role_y + 22.0),
-            egui::Align2::CENTER_CENTER,
+            pos2(left_x, rect.max.y - 16.0),
+            egui::Align2::LEFT_CENTER,
             &formatted,
-            FontId::new(11.5, FontFamily::Monospace),
+            FontId::new(12.5, FontFamily::Monospace),
             text_col,
         );
 
@@ -810,23 +856,28 @@ impl PaletteApp {
             let mut srgb = [r, g, b];
             let picker_resp = child_ui
                 .color_edit_button_srgb(&mut srgb)
-                .on_hover_text("Modifier cette couleur (verrouille automatiquement)");
+                .on_hover_text("Modifier cette couleur (la fixe automatiquement)");
             if picker_resp.changed() {
                 edited_hex = Some(cu::rgb256_to_hex(srgb[0], srgb[1], srgb[2]));
             }
 
             child_ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
-                let lock_icon = if is_locked { "🔒" } else { "🔓" };
-                let btn = egui::Button::new(RichText::new(lock_icon).size(13.0).color(text_col))
-                    .fill(Color32::TRANSPARENT)
-                    .stroke(Stroke::NONE);
+                let lock_label = if is_locked { "Fixée" } else { "Fixer" };
+                let btn = egui::Button::new(
+                    RichText::new(lock_label)
+                        .size(11.5)
+                        .strong()
+                        .color(text_col),
+                )
+                .fill(Color32::TRANSPARENT)
+                .stroke(Stroke::NONE);
                 if ui
                     .add(btn)
                     .on_hover_cursor(CursorIcon::PointingHand)
                     .on_hover_text(if is_locked {
-                        "Déverrouiller cette couleur"
+                        "Autoriser la régénération de cette couleur"
                     } else {
-                        "Verrouiller cette couleur"
+                        "Conserver cette couleur lors des régénérations"
                     })
                     .clicked()
                 {
@@ -864,7 +915,7 @@ impl PaletteApp {
         }
 
         resp.on_hover_cursor(CursorIcon::PointingHand).on_hover_text(format!(
-            "{}\n{} — Clic : copier {} | Ctrl+clic : copier RGB",
+            "{}\n{}, Clic : copier en {} | Ctrl+clic : copier en RGB",
             cu::role_description(role),
             hex_code,
             self.color_format.as_str()
@@ -874,24 +925,28 @@ impl PaletteApp {
     fn render_main_sections(&mut self, ui: &mut Ui) {
         let t = self.theme;
 
+        ui.horizontal_wrapped(|ui| {
+            for tab in Tab::ALL {
+                ui.selectable_value(&mut self.active_tab, tab, tab.label());
+            }
+        });
+        ui.add_space(8.0);
+
         // 1. Palette de travail
-        section_frame(ui, t, "🎨 Palette de travail", |ui| {
+        if self.active_tab == Tab::Palette {
+        section_frame(ui, t, "Palette de travail", |ui| {
             ui.label(
-                RichText::new(
-                    "Utilisez le bouton couleur en haut à gauche d'une carte pour l'éditer manuellement (verrouille automatiquement), \
-                     🔒 pour verrouiller/déverrouiller, ou cliquez sur une carte pour copier son code.",
-                )
-                .size(12.0)
-                .italics()
-                .color(t.text_muted),
+                RichText::new("Cliquez sur une carte pour copier sa valeur. Le sélecteur modifie la couleur et la fixe ; Fixer empêche la régénération.")
+                    .size(12.0)
+                    .color(t.text_muted),
             );
             ui.add_space(4.0);
 
             ui.horizontal_wrapped(|ui| {
-                if ui.button("🔄 Régénérer").clicked() {
+                if ui.button("Régénérer").clicked() {
                     self.regenerate_working_palette(true);
                 }
-                if ui.button("📋 Copier toute la palette").clicked() {
+                if ui.button("Copier la palette").clicked() {
                     let fmt = self.color_format;
                     let text = self
                         .working_palette
@@ -902,7 +957,7 @@ impl PaletteApp {
                     self.copy_text_to_clipboard(
                         ui,
                         &text,
-                        "✓ Palette complète copiée dans le presse-papier.".to_string(),
+                        "Palette copiée.".to_string(),
                     );
                 }
 
@@ -913,7 +968,7 @@ impl PaletteApp {
                         .hint_text("Ma palette…")
                         .desired_width(140.0),
                 );
-                if ui.button("⭐ Enregistrer en favori").clicked() {
+                if ui.button("Enregistrer en favori").clicked() {
                     let name = if self.favorite_name_input.trim().is_empty() {
                         format!("Palette {}", self.base_hex)
                     } else {
@@ -927,7 +982,7 @@ impl PaletteApp {
                     );
                     self.favorite_name_input.clear();
                     self.set_status(
-                        format!("✓ Palette « {name} » enregistrée dans les favoris."),
+                        format!("Palette « {name} » ajoutée aux favoris."),
                         StatusKind::Success,
                     );
                 }
@@ -945,16 +1000,15 @@ impl PaletteApp {
                     });
                 });
         });
+        }
 
         // 2. Toutes les harmonies
-        section_frame(ui, t, "🧭 Toutes les harmonies", |ui| {
+        if self.active_tab == Tab::Harmonies {
+        section_frame(ui, t, "Harmonies", |ui| {
             ui.label(
-                RichText::new(
-                    "Toutes les harmonies générées simultanément pour la couleur de base actuelle (clic = copier, Ctrl+clic = copier en RGB) :",
-                )
-                .size(12.0)
-                .italics()
-                .color(t.text_muted),
+                RichText::new("Sept schémas calculés à partir de la couleur de base.")
+                    .size(12.0)
+                    .color(t.text_muted),
             );
             ui.add_space(4.0);
 
@@ -973,9 +1027,11 @@ impl PaletteApp {
                     });
             }
         });
+        }
 
         // 3. Contraste WCAG
-        section_frame(ui, t, "🔎 Contraste WCAG", |ui| {
+        if self.active_tab == Tab::Accessibilite {
+        section_frame(ui, t, "Contraste WCAG", |ui| {
             egui::Grid::new("wcag_contrast_grid")
                 .striped(true)
                 .min_col_width(160.0)
@@ -1063,7 +1119,7 @@ impl PaletteApp {
 
                     if let Some((ratio, badge, col)) = self.contrast_pair_result {
                         ui.label(
-                            RichText::new(format!("{ratio:.2}:1 — {badge}"))
+                            RichText::new(format!("{ratio:.2}:1, {badge}"))
                                 .strong()
                                 .color(col),
                         );
@@ -1071,9 +1127,11 @@ impl PaletteApp {
                 }
             });
         });
+        }
 
         // 4. Simulation de daltonisme
-        section_frame(ui, t, "👁 Simulation de daltonisme", |ui| {
+        if self.active_tab == Tab::Accessibilite {
+        section_frame(ui, t, "Simulation de daltonisme", |ui| {
             let cb_snapshot = self.cache.colorblind_rows.clone();
             for (cb_type, row) in cb_snapshot {
                 ui.add_space(4.0);
@@ -1089,9 +1147,11 @@ impl PaletteApp {
                     });
             }
         });
+        }
 
         // 5. Aperçu UI (mockup)
-        section_frame(ui, t, "🖼 Aperçu UI", |ui| {
+        if self.active_tab == Tab::Palette {
+        section_frame(ui, t, "Aperçu d'interface", |ui| {
             let accent = self
                 .working_palette
                 .iter()
@@ -1126,7 +1186,7 @@ impl PaletteApp {
                 .show(ui, |ui| {
                     ui.set_width(ui.available_width());
                     ui.label(
-                        RichText::new("Aperçu d'interface")
+                        RichText::new("Tableau de bord")
                             .size(16.0)
                             .strong()
                             .color(hex_to_color32(fg)),
@@ -1141,7 +1201,7 @@ impl PaletteApp {
                         .show(ui, |ui| {
                             let card_fg = readable_color32(card_bg);
                             ui.label(
-                                RichText::new("Titre de carte")
+                                RichText::new("Titre de la carte")
                                     .size(14.5)
                                     .strong()
                                     .color(card_fg),
@@ -1149,7 +1209,7 @@ impl PaletteApp {
                             ui.add_space(4.0);
                             ui.label(
                                 RichText::new(
-                                    "Texte d'exemple utilisant en temps réel les couleurs de la palette de travail.",
+                                    "Exemple de texte rendu avec les couleurs de la palette de travail.",
                                 )
                                 .size(12.5)
                                 .color(card_fg),
@@ -1159,7 +1219,7 @@ impl PaletteApp {
                             let btn_bg = hex_to_color32(accent);
                             let btn_fg = readable_color32(accent);
                             let btn = egui::Button::new(
-                                RichText::new("Bouton d'action").strong().color(btn_fg),
+                                RichText::new("Action principale").strong().color(btn_fg),
                             )
                             .fill(btn_bg)
                             .corner_radius(CornerRadius::same(6));
@@ -1167,9 +1227,11 @@ impl PaletteApp {
                         });
                 });
         });
+        }
 
         // 6. Dégradé CSS (rendu GPU par Mesh)
-        section_frame(ui, t, "🌈 Dégradé CSS", |ui| {
+        if self.active_tab == Tab::Palette {
+        section_frame(ui, t, "Dégradé CSS", |ui| {
             let len = self.working_palette.len();
             if len >= 2 {
                 let mut changed = false;
@@ -1264,22 +1326,24 @@ impl PaletteApp {
                             .font(FontId::new(12.5, FontFamily::Monospace))
                             .desired_width(ui.available_width() - 120.0),
                     );
-                    if ui.button("📋 Copier le CSS").clicked() {
+                    if ui.button("Copier le CSS").clicked() {
                         let css = self.gradient_css.clone();
                         self.copy_text_to_clipboard(
                             ui,
                             &css,
-                            "✓ CSS du dégradé copié.".to_string(),
+                            "CSS du dégradé copié.".to_string(),
                         );
                     }
                 });
             }
         });
+        }
 
         // 7. Extraction depuis une image
-        section_frame(ui, t, "📷 Extraction depuis une image", |ui| {
+        if self.active_tab == Tab::Image {
+        section_frame(ui, t, "Extraction depuis une image", |ui| {
             ui.horizontal(|ui| {
-                if ui.button("📂 Charger une image…").clicked()
+                if ui.button("Charger une image…").clicked()
                     && let Some(path) = rfd::FileDialog::new()
                         .set_title("Choisir une image")
                         .add_filter(
@@ -1298,14 +1362,14 @@ impl PaletteApp {
                             self.extracted_colors = colors;
                             self.set_status(
                                 format!(
-                                    "✓ {} couleurs dominantes extraites.",
+                                    "{} couleurs dominantes extraites.",
                                     self.extracted_colors.len()
                                 ),
                                 StatusKind::Success,
                             );
                         }
                         Err(err) => {
-                            self.set_status(format!("✗ {err}"), StatusKind::Error);
+                            self.set_status(format!("{err}"), StatusKind::Error);
                         }
                     }
                 }
@@ -1331,7 +1395,7 @@ impl PaletteApp {
                     });
 
                 ui.add_space(6.0);
-                if ui.button("✨ Utiliser comme palette de travail").clicked() {
+                if ui.button("Utiliser comme palette de travail").clicked() {
                     self.working_palette = self
                         .extracted_colors
                         .iter()
@@ -1342,28 +1406,27 @@ impl PaletteApp {
                     let first = self.extracted_colors[0].clone();
                     self.set_base_color(&first, true, true);
                     self.set_status(
-                        "✓ Palette de travail remplacée par les couleurs extraites de l'image.",
+                        "Palette de travail remplacée par les couleurs extraites de l'image.",
                         StatusKind::Success,
                     );
                 }
             }
         });
+        }
 
         // 8. Favoris
-        section_frame(ui, t, "⭐ Favoris", |ui| {
+        if self.active_tab == Tab::Favoris {
+        section_frame(ui, t, "Favoris", |ui| {
             ui.label(
-                RichText::new("Cliquez sur « Charger » ou double-cliquez sur un favori pour l'appliquer.")
+                RichText::new("Double-clic sur un favori pour le charger.")
                     .size(12.0)
-                    .italics()
                     .color(t.text_muted),
             );
             ui.add_space(4.0);
 
             if self.favorites.is_empty() {
                 ui.label(
-                    RichText::new("Aucun favori enregistré pour le moment.")
-                        .italics()
-                        .color(t.text_muted),
+                    RichText::new("Aucun favori enregistré.").color(t.text_muted),
                 );
             } else {
                 let mut load_idx: Option<usize> = None;
@@ -1374,7 +1437,7 @@ impl PaletteApp {
                     ui.horizontal(|ui| {
                         let resp = ui.selectable_label(
                             is_selected,
-                            format!("{}  ({}) — [{}]", fav.name, fav.base_hex, fav.scheme),
+                            format!("{}  ({}), [{}]", fav.name, fav.base_hex, fav.scheme),
                         );
                         if resp.clicked() {
                             self.selected_favorite = Some(i);
@@ -1394,7 +1457,7 @@ impl PaletteApp {
                             load_idx = Some(i);
                         }
                         if ui
-                            .small_button(RichText::new("🗑").color(t.error))
+                            .small_button(RichText::new("Supprimer").color(t.error))
                             .on_hover_text("Supprimer ce favori")
                             .clicked()
                         {
@@ -1411,7 +1474,7 @@ impl PaletteApp {
                     self.locked_indices = (0..self.working_palette.len()).collect();
                     self.set_base_color(&fav.base_hex, true, true);
                     self.set_status(
-                        format!("✓ Favori « {} » chargé.", fav.name),
+                        format!("Favori « {} » chargé.", fav.name),
                         StatusKind::Success,
                     );
                 }
@@ -1421,17 +1484,18 @@ impl PaletteApp {
                     if self.selected_favorite == Some(idx) {
                         self.selected_favorite = None;
                     }
-                    self.set_status("✓ Favori supprimé.", StatusKind::Info);
+                    self.set_status("Favori supprimé.", StatusKind::Info);
                 }
             }
         });
+        }
 
         // 9. Export
-        section_frame(ui, t, "⬇ Export", |ui| {
+        if self.active_tab == Tab::Export {
+        section_frame(ui, t, "Export", |ui| {
             ui.label(
-                RichText::new("Exporte la palette de travail actuelle :")
+                RichText::new("Exporte la palette de travail.")
                     .size(12.0)
-                    .italics()
                     .color(t.text_muted),
             );
             ui.add_space(4.0);
@@ -1447,40 +1511,37 @@ impl PaletteApp {
                     ("png", "Image PNG"),
                 ];
                 for (fmt, label) in formats {
-                    let btn = egui::Button::new(
-                        RichText::new(label).strong().color(t.accent_text),
-                    )
-                    .fill(t.accent);
-                    if ui.add(btn).clicked() {
+                    if ui.button(label).clicked() {
                         self.export_working_palette(fmt);
                     }
                 }
             });
         });
+        }
 
         // 10. Règles de design (aide-mémoire)
-        section_frame(ui, t, "📚 Règles de design (aide-mémoire)", |ui| {
+        if self.active_tab == Tab::Guide {
+        section_frame(ui, t, "Règles de design", |ui| {
             ui.label(
-                RichText::new(
-                    "Aide-mémoire des règles de design colorimétrique les plus courantes — cliquez sur un titre pour déplier/replier.",
-                )
-                .size(12.0)
-                .italics()
-                .color(t.text_muted),
+                RichText::new("Repères courants en design colorimétrique.")
+                    .size(12.0)
+                    .color(t.text_muted),
             );
             ui.add_space(6.0);
 
-            for &(title, rules) in DESIGN_RULES {
-                egui::CollapsingHeader::new(RichText::new(title).size(13.5).strong().color(t.accent))
-                    .default_open(true)
+            for (idx, &(title, rules)) in DESIGN_RULES.iter().enumerate() {
+                egui::CollapsingHeader::new(RichText::new(title).size(13.5).strong().color(t.text))
+                    .default_open(idx == 0)
                     .show(ui, |ui| {
                         for &rule in rules {
-                            ui.label(RichText::new(format!("•  {rule}")).size(12.5).color(t.text));
+                            ui.label(RichText::new(rule).size(12.5).color(t.text));
+                            ui.add_space(2.0);
                         }
                     });
                 ui.add_space(2.0);
             }
         });
+        }
     }
 
     fn export_working_palette(&mut self, fmt: &str) {
@@ -1498,13 +1559,13 @@ impl PaletteApp {
             match manager.save(&path, fmt) {
                 Ok(()) => {
                     self.set_status(
-                        format!("✓ Palette exportée : {}", path.display()),
+                        format!("Palette exportée : {}", path.display()),
                         StatusKind::Success,
                     );
                 }
                 Err(err) => {
                     self.set_status(
-                        format!("✗ Échec de l'export {} : {err}", fmt.to_uppercase()),
+                        format!("Échec de l'export {} : {err}", fmt.to_uppercase()),
                         StatusKind::Error,
                     );
                 }
@@ -1523,7 +1584,7 @@ impl PaletteApp {
                 UpdateCheckOutcome::UpToDate(ver) => {
                     if manual {
                         self.set_status(
-                            format!("✓ GoldenHue est à jour (v{ver})."),
+                            format!("GoldenHue est à jour (v{ver})."),
                             StatusKind::Success,
                         );
                     }
@@ -1531,7 +1592,7 @@ impl PaletteApp {
                 UpdateCheckOutcome::UpdateAvailable(info) => {
                     self.set_status(
                         format!(
-                            "🚀 Nouvelle version v{} disponible ! Cliquez sur « Mettre à jour maintenant » en haut.",
+                            "Version {} disponible. Utilisez le bandeau en haut pour l'installer.",
                             info.latest_version
                         ),
                         StatusKind::Success,
@@ -1540,7 +1601,7 @@ impl PaletteApp {
                 }
                 UpdateCheckOutcome::Error(err) => {
                     if manual {
-                        self.set_status(format!("✗ {err}"), StatusKind::Error);
+                        self.set_status(format!("{err}"), StatusKind::Error);
                     }
                 }
             }
@@ -1554,13 +1615,13 @@ impl PaletteApp {
             match outcome {
                 SelfUpdateOutcome::ReadyToRestart(exe_path) => {
                     self.set_status(
-                        "✓ Mise à jour installée ! Redémarrage de GoldenHue…",
+                        "Mise à jour installée. Redémarrage…",
                         StatusKind::Success,
                     );
                     updater::restart_application(&exe_path);
                 }
                 SelfUpdateOutcome::Error(err) => {
-                    self.set_status(format!("✗ {err}"), StatusKind::Error);
+                    self.set_status(format!("{err}"), StatusKind::Error);
                 }
             }
         }
@@ -1570,6 +1631,23 @@ impl PaletteApp {
 impl eframe::App for PaletteApp {
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
         self.poll_update_channels();
+
+        let typing = ui.ctx().memory(|m| m.focused().is_some());
+        if !typing {
+            let (undo, redo) = ui.input(|i| {
+                let cmd = i.modifiers.command;
+                (
+                    cmd && !i.modifiers.shift && i.key_pressed(egui::Key::Z),
+                    cmd && (i.key_pressed(egui::Key::Y)
+                        || (i.modifiers.shift && i.key_pressed(egui::Key::Z))),
+                )
+            });
+            if undo {
+                self.undo();
+            } else if redo {
+                self.redo();
+            }
+        }
 
         if self.theme_dirty {
             self.theme.apply_to_ctx(ui.ctx());
@@ -1603,7 +1681,7 @@ impl eframe::App for PaletteApp {
                     ui.horizontal_wrapped(|ui| {
                         ui.label(
                             RichText::new(format!(
-                                "🚀 Nouvelle version disponible : v{} (actuelle : v{CURRENT_VERSION})",
+                                "Version {} disponible (actuelle : {CURRENT_VERSION})",
                                 info.latest_version
                             ))
                             .strong()
@@ -1614,8 +1692,7 @@ impl eframe::App for PaletteApp {
                             let first_line = info.release_notes.lines().next().unwrap_or("");
                             if !first_line.is_empty() {
                                 ui.label(
-                                    RichText::new(format!("— {first_line}"))
-                                        .italics()
+                                    RichText::new(first_line.to_string())
                                         .color(t.text_muted),
                                 );
                             }
@@ -1623,9 +1700,9 @@ impl eframe::App for PaletteApp {
 
                         let btn_update = egui::Button::new(
                             RichText::new(if self.is_updating {
-                                "⏳ Téléchargement en cours…"
+                                "Téléchargement en cours…"
                             } else {
-                                "⬇ Mettre à jour maintenant"
+                                "Mettre à jour maintenant"
                             })
                             .strong()
                             .color(t.accent_text),
@@ -1647,11 +1724,11 @@ impl eframe::App for PaletteApp {
                             ));
                         }
 
-                        if ui.button("🌐 Voir sur GitHub").clicked() {
+                        if ui.button("Voir sur GitHub").clicked() {
                             updater::open_url_in_browser(&info.html_url);
                         }
 
-                        if ui.button("✖ Ignorer").clicked() {
+                        if ui.button("Ignorer").clicked() {
                             self.available_update = None;
                         }
                     });
@@ -1672,7 +1749,11 @@ impl eframe::App for PaletteApp {
                     StatusKind::Success => t.success,
                     StatusKind::Error => t.error,
                 };
-                ui.label(RichText::new(&self.status_text).italics().color(status_color));
+                ui.horizontal(|ui| {
+                    let (dot, _) = ui.allocate_exact_size(vec2(10.0, 14.0), Sense::hover());
+                    ui.painter().circle_filled(dot.center(), 4.0, status_color);
+                    ui.label(RichText::new(&self.status_text).size(12.5).color(t.text));
+                });
             });
 
         // Panneau latéral gauche

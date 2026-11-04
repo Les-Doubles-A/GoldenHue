@@ -1,8 +1,7 @@
-//! Thèmes clair et sombre de GoldenHue avec conversion directe en `egui::Color32` et `egui::Visuals`.
-//! Contrairement à la version Python qui nécessitait un redémarrage, le changement de thème
-//! s'applique ici instantanément en temps réel !
+//! Thèmes clair et sombre de GoldenHue (couleurs, visuels et échelle typographique egui).
+//! Le changement de thème s'applique immédiatement, sans redémarrage.
 
-use egui::{Color32, CornerRadius, Stroke, Style, Visuals};
+use egui::{Color32, CornerRadius, FontFamily, FontId, Stroke, Style, TextStyle, Visuals};
 
 #[derive(Debug, Clone, Copy)]
 pub struct Theme {
@@ -19,6 +18,7 @@ pub struct Theme {
     pub success: Color32,
     pub error: Color32,
     pub border: Color32,
+    pub hover: Color32,
 }
 
 pub const DARK: Theme = Theme {
@@ -35,6 +35,7 @@ pub const DARK: Theme = Theme {
     success: Color32::from_rgb(0x2E, 0xCC, 0x71),
     error: Color32::from_rgb(0xE7, 0x4C, 0x3C),
     border: Color32::from_rgb(0x3D, 0x51, 0x66),
+    hover: Color32::from_rgb(0x36, 0x4A, 0x5E),
 };
 
 pub const LIGHT: Theme = Theme {
@@ -50,7 +51,8 @@ pub const LIGHT: Theme = Theme {
     entry_fg: Color32::from_rgb(0x2C, 0x3E, 0x50),
     success: Color32::from_rgb(0x27, 0xAE, 0x60),
     error: Color32::from_rgb(0xC0, 0x39, 0x2B),
-    border: Color32::from_rgb(0xDC, 0xDF, 0xE1),
+    border: Color32::from_rgb(0xCF, 0xD5, 0xDA),
+    hover: Color32::from_rgb(0xDF, 0xE5, 0xEA),
 };
 
 #[inline]
@@ -87,15 +89,23 @@ impl Theme {
         visuals.widgets.inactive.fg_stroke = Stroke::new(1.0, self.text);
         visuals.widgets.inactive.corner_radius = CornerRadius::same(6);
 
-        visuals.widgets.hovered.bg_fill = self.accent;
-        visuals.widgets.hovered.weak_bg_fill = self.accent;
-        visuals.widgets.hovered.fg_stroke = Stroke::new(1.5, self.accent_text);
-        visuals.widgets.hovered.corner_radius = CornerRadius::same(6);
+        let radius = CornerRadius::same(6);
 
-        visuals.widgets.active.bg_fill = self.accent;
-        visuals.widgets.active.weak_bg_fill = self.accent;
-        visuals.widgets.active.fg_stroke = Stroke::new(2.0, self.accent_text);
-        visuals.widgets.active.corner_radius = CornerRadius::same(6);
+        visuals.widgets.hovered.bg_fill = self.hover;
+        visuals.widgets.hovered.weak_bg_fill = self.hover;
+        visuals.widgets.hovered.bg_stroke = Stroke::new(1.0, self.accent);
+        visuals.widgets.hovered.fg_stroke = Stroke::new(1.0, self.text);
+        visuals.widgets.hovered.corner_radius = radius;
+
+        visuals.widgets.active.bg_fill = self.border;
+        visuals.widgets.active.weak_bg_fill = self.border;
+        visuals.widgets.active.bg_stroke = Stroke::new(1.0, self.accent);
+        visuals.widgets.active.fg_stroke = Stroke::new(1.0, self.text);
+        visuals.widgets.active.corner_radius = radius;
+
+        visuals.widgets.open.bg_fill = self.hover;
+        visuals.widgets.open.weak_bg_fill = self.hover;
+        visuals.widgets.open.corner_radius = radius;
 
         visuals.selection.bg_fill = self.accent;
         visuals.selection.stroke = Stroke::new(1.0, self.accent_text);
@@ -105,7 +115,16 @@ impl Theme {
             ..Default::default()
         };
         style.spacing.item_spacing = egui::vec2(8.0, 6.0);
-        style.spacing.button_padding = egui::vec2(10.0, 6.0);
+        style.spacing.button_padding = egui::vec2(12.0, 5.0);
+        style.spacing.interact_size.y = 26.0;
+        style.text_styles = [
+            (TextStyle::Heading, FontId::new(20.0, FontFamily::Proportional)),
+            (TextStyle::Body, FontId::new(14.0, FontFamily::Proportional)),
+            (TextStyle::Button, FontId::new(14.0, FontFamily::Proportional)),
+            (TextStyle::Small, FontId::new(11.5, FontFamily::Proportional)),
+            (TextStyle::Monospace, FontId::new(13.5, FontFamily::Monospace)),
+        ]
+        .into();
         ctx.set_global_style(style);
     }
 }

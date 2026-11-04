@@ -12,7 +12,7 @@ Générateur de palettes de couleurs natif ultra-optimisé écrit en **Rust** av
 - **Rendu GPU des dégradés CSS** : interpolation directe par sommets via un `egui::Mesh` matériel en un seul appel de dessin (au lieu de 400 segments CPU).
 - **K-Means sans allocation en boucle** : extraction des couleurs dominantes d'une image sur buffer contigu `[f32; 3]` avec arrêt anticipé à convergence et générateur déterministe `XorShift64`.
 - **Changement de thème instantané** : bascule Clair / Sombre en temps réel sans redémarrer l'application.
-- **Vérification et mise à jour automatique via GitHub** : vérifie en arrière-plan au démarrage (et via le bouton « 🔄 Vérifier màj ») si une version plus récente est disponible sur `Les-Doubles-A/GoldenHue`, affiche une bannière de mise à jour et permet de télécharger + remplacer `GoldenHue.exe` et relancer l'application en un clic.
+- **Vérification et mise à jour automatique via GitHub** : vérifie en arrière-plan au démarrage (et via le bouton « Mises à jour ») si une version plus récente est disponible sur `Les-Doubles-A/GoldenHue`, affiche une bannière de mise à jour et permet de télécharger + remplacer `GoldenHue.exe` et relancer l'application en un clic.
 
 ## Prérequis & Compilation
 
@@ -47,8 +47,8 @@ Sept schémas générés à partir de `generate_palette(base_hex, scheme)` :
 ### 4. Ergonomie / UX
 - Historique des 12 dernières couleurs de base (`~/.goldenhue/history.json`).
 - Favoris persistés localement (`~/.goldenhue/favorites.json`).
-- Verrouillage individuel par couleur (`🔒` / `🔓`) et édition directe par sélecteur de couleur sur chaque carte (verrouille automatiquement).
-- Génération aléatoire (« 🎲 Surprends-moi »), ajustement global de saturation/luminosité, Annuler/Refaire (`Undo`/`Redo`), recherche par nom de couleur en français (exacte ou approximative).
+- Verrouillage individuel par couleur (bouton Fixer / Fixée) et édition directe par sélecteur de couleur sur chaque carte (verrouille automatiquement).
+- Génération aléatoire (« Couleur aléatoire »), ajustement global de saturation/luminosité, Annuler/Rétablir (Ctrl+Z / Ctrl+Y), recherche par nom de couleur en français (exacte ou approximative).
 
 ## Structure du projet
 
